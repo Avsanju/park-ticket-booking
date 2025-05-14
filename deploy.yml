@@ -1,0 +1,21 @@
+# .github/workflows/deploy.yml
+name: Deploy App
+
+on:
+  push:
+    branches: [main, staging, dev]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Environment
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            echo "Deploying to Development"
+          elif [ "${{ github.ref }}" == "refs/heads/staging" ]; then
+            echo "Deploying to Staging"
+          elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "Deploying to Production"
+          fi
